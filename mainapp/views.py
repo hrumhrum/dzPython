@@ -1,8 +1,18 @@
-from django.shortcuts import render_to_response
-from mainapp.models import Organization, News, UserProfile
+
+from django.shortcuts import render
+from mainapp.models import News, Organization, UserProfile
+from django.contrib import auth
+from django.contrib.auth.models import User
+from django.template import RequestContext
 
 def index(request):
-	org = Organization.objects.get(id=1)
-	news = News.objects.filter(organization_id=1)
-	return render_to_response('mainapp/organization.html', {'desc' : org, 'news' : news})
+	user = request.user
+	try:
+		userprofile = UserProfile.objects.get(user_id=user.id)
+	except UserProfile.DoesNotExist:
+		userprofile = None
+
+	organizations = Organization.objects.all()
+	return render(request, 'mainapp/index.html', {'poll': organizations, 'userprofile': userprofile})
+
     
