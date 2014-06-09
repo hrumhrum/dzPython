@@ -88,3 +88,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (('static', '/home/velikolepnii/django/dz/static'))
+LOGIN_REDIRECT_URL = '/'
