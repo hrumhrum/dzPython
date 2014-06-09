@@ -1,8 +1,90 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html>
-	<meta charset='utf-8'>
-	<title>Главная</title>
-	<body>
-		Hi!
-	</body>
+    <head>
+        <title>Главная</title>
+    <!-- Bootstrap -->
+        <link href=  "{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-static-top">
+                <nav class="navbar-inner">
+                    <a class="brand" href="http://ask-karuna.ru">Вопросы и ответы, главная страница</a>
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li><a href="http://ask-karuna.ru/question/add">Добавить вопрос</a></li>
+                        <li><a href="http://ask-karuna.ru/accounts/registration">Регистрация</a></li>{% if user.is_authenticated %} 
+                        <li><a href="http://ask-karuna.ru/accounts/profile">{{user.username}}</a></li>
+                        <li><a href="http://ask-karuna.ru/accounts/logout">Выход</a></li> {% else %}
+                        <li><a href="http://ask-karuna.ru/accounts/login">Войти</a></li>
+                        {% endif %}
+                    </ul>
+                    
+                </nav>
+        </div>
+        <div class="container">
+            <header>
+                <table class="table">
+                    <tr>
+                        <td align="left"><h2>Последние вопросы:</h2></td>
+                        <td align="right"><h2>{{q_all|length}}</h2> вопросов всего</td>
+                    </tr>
+                </table>
+            </header>
+            
+            
+                <div class="container">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td><strong>Дата</strong></td>
+                                <td><strong>Заголовок</strong></td>
+                                <td><strong>Автор</strong></td>
+                                <td><strong>Лайки</strong></td>
+                            </tr>
+
+                            {% for qst in question %}
+                            <tr>
+                                <td>{{qst.datereg}}</td>
+                                <td><a class="brand" href="http://ask-karuna.ru/question/?id={{qst.id}}">{{qst.title}}<a></td>
+                                <td>{{qst.author}}</td>
+                                <td>
+                                {% if qst.id not in data2 %}
+                                0
+                                {% endif %}
+                                {% for dt in data %}
+                                    {% if dt.id == qst.id %}
+                                    {{dt.value}}
+                                    
+                                    {% endif %}
+                                   
+                                {% endfor %}                                   
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            
+        </div>
+
+        <div align="center" class="pagination">
+    <span class="step-links">
+        {% if question.has_previous %}
+            <a href="?page={{ question.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ question.number }} of {{ question.paginator.num_pages }}.
+        </span>
+
+        {% if question.has_next %}
+            <a href="?page={{ question.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+        <script src="{{ STATIC_URL }}js/jquery-latest.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    </body>
 </html>
