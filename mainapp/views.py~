@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the poll index.")
+=======
+from django.shortcuts import render
+
+# Create your views here.
+>>>>>>> 7d3efa0bc581af5573d61fc95bec77b722944e82

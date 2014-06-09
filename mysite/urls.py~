@@ -1,0 +1,16 @@
+from django.conf.urls import patterns, include, url
+
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'mysite.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
+<<<<<<< HEAD
+    url(r'^', include('mainapp.urls')),
+=======
+>>>>>>> 7d3efa0bc581af5573d61fc95bec77b722944e82
+    url(r'^admin/', include(admin.site.urls)),
+)
