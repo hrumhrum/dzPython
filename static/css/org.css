@@ -1,0 +1,95 @@
+.body{
+	background:  black;
+	background-image: url(../jpeg/aluminum_texture1644.jpg)
+
+}
+
+.brand {
+	font-family: serif;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: lighter;
+	font-size: 32px;
+	line-height: 100%;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-decoration: none;
+	text-transform: none;
+	text-align: center;
+	vertical-align: center;
+	color: white;
+}
+
+#description {
+	background-color: silver; 
+	width:  1000px;  
+	height: 75px; 
+	position: absolute; 	 
+	top: 50%;
+	left: 50%;
+	margin-left: -500px;
+	margin-top: -250px;
+	color: white;
+	font-family: serif;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: lighter;
+	line-height: 100%;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-align: left;
+	vertical-align: center;
+	color: black;
+	font-size: 16px;
+	padding: 15px 15px 15px 15px;
+}
+
+#contacts {
+	background-color: silver; 
+	width:  1000px;  
+	height: 50px; 
+	position: absolute; 	 
+	top: 50%;
+	left: 50%;
+	margin-left: -500px;
+	margin-top: -150px;
+	color: white;
+	font-family: serif;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: lighter;
+	line-height: 100%;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-align: left;
+	vertical-align: center;
+	color: black;
+	font-size: 16px;
+	padding: 15px 15px 15px 15px;
+}
+
+
+.container {
+	background-color: silver; 
+	width:  1000px;  
+	
+	position: absolute; 	 
+	top: 50%;
+	left: 50%;
+	margin-left: -500px;
+	margin-top: -75px;
+	color: white;
+	font-family: serif;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: lighter;
+	line-height: 100%;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-align: left;
+	vertical-align: center;
+	color: black;
+	font-size: 16px;
+	padding: 15px 15px 15px 15px;
+
+}

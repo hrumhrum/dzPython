@@ -18,3 +18,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     organization_id = models.ForeignKey(Organization)
     privilegies = models.CharField(max_length=200)
+
+
+    

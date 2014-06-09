@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+TEMPLATE_DIRS = ('/home/julia/dz/dzPython/mainapp/templates')
 
 ALLOWED_HOSTS = []
 
@@ -87,4 +87,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (('static', '/home/velikolepnii/django/dz/static'))
+STATICFILES_DIRS = (('static', '/home/julia/dz/dzPython/static'))
