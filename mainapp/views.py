@@ -43,5 +43,22 @@ def search(request):
 def users_list(request):
 	return render(request, 'mainapp/users_list')
 
+def edit(request):
+	user = request.user
+	try:
+		userprofile = UserProfile.objects.get(user_id=user.id)
+	except UserProfile.DoesNotExist:
+		userprofile = None
 
-    
+	if userprofile == None:
+		return render(request, 'mainapp/403.html')
+	else:		
+		if userprofile.privilegies != 'admin':
+			return render(request, 'mainapp/403.html')
+		else:
+			if request.GET.get('id'):
+				getid = request.GET.get('id')
+				organizations = Organization.objects.get(id = getid)
+				return render(request, 'mainapp/editorganization.html', {'organizations': organizations})
+			else:
+				getid = 1
