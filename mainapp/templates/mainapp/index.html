@@ -27,7 +27,7 @@
             {% if user.is_authenticated %}
             <li><a href="">{{ user.username }}</a></li>
             <li><a href="#">{{ userprofile.privilegies }}</a></li>
-            <li><a href="#">{{ userprofile.organization_id.name }}</a></li>
+            <li><a href="#">{% if userprofile.privilegies != 'admin' %}{{ userprofile.organization_id.name }}{% endif %}</a></li>
             </ul>
             <ul class="nav navbar-nav pull-right">
             <li><a href="/logout/">Logout</a></li>

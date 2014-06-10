@@ -29,7 +29,7 @@
 	            {% if user.is_authenticated %}
 	            <li><a href="">{{ user.username }}</a></li>
 	            <li><a href="#">{{ userprofile.privilegies }}</a></li>
-	            <li><a href="#">{{ userprofile.organization_id.name }}</a></li>
+            	<li><a href="#">{% if userprofile.privilegies != 'admin' %}{{ userprofile.organization_id.name }}{% endif %}</a></li>
 	           	{% if userprofile.privilegies == 'admin' %}<li><a href="http://localhost:8000/edit/?id={{ desc.id }}">Редактировать организацию</a></li> {% endif %}
 	            </ul>
 	            <ul class="nav navbar-nav pull-right">
