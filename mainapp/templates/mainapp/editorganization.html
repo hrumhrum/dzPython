@@ -50,37 +50,29 @@
 	        </div><!-- /.navbar-collapse -->        
 	      </div><!-- /.container-fluid -->
       </nav>
-									<div id="description">
-										{{desc.description}}
-									</div>
-
-									<div id="contacts">
-										{{desc.addres}}, тел. {{desc.phone}}
-									
-									</div> 
-
-									<div class="mycontainer">
-										<table class="table">
-											<thead>
-												<tr>
-													<td>Новости компании</td>
-												</tr>
-											</thead>
-
-											<tbody> {% for new in news %}
-												<tr>
-													<td>{{new.title}}</td>
-												</tr>
-
-											    <tr>
-											    	<td>{{new.description}}</td>
-											    </tr>
-											<tbody>
-											
-											{% endfor %}
-										</table>
-									</div>
-
+      <div class="container">
+      <div class="row">
+      <div class="offset4 span4">
+      	        <form class="navbar-form center form" role="search" action='/search/' method='post'>{% csrf_token %}
+                    <div class="form-group" style="width: 100%">
+						<input type="text" class="form-control" name="name" style="width: 100%; margin-bottom: 50px" value="{{ organizations.name }}">                            
+                    </div>
+					<div class="form-group" style="width: 100%">
+                        <input type="text" class="form-control" name="addres" style="width: 100%; margin-bottom: 50px" value="{{ organizations.addres }}">                            
+                    </div>
+                    <div class="form-group" style="width: 100%">
+                        <input type="text" class="form-control" name="phone" style="width: 100%; margin-bottom: 50px" value="{{ organizations.phone }}">                            
+                    </div>
+					<div class="form-group" style="width: 100%">
+                        <input type="text" class="form-control" name="description" style="width: 100%; margin-bottom: 50px" value="{{ organizations.description }}"                            
+                    </div>
+					<div class="form-group" style="width: 100%">
+	                    <button type="submit" class="btn btn-default">Сохранить</button>                           
+                    </div>                        
+                </form>
+        </div>
+        </div>
+        </div>
 			<script src="{% static "js/jquery-latest.js" %}"></script>
 	        <script src="{% static "js/bootstrap.min.js" %}"></script>
 	    

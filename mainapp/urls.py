@@ -10,4 +10,6 @@ urlpatterns = patterns('',
 	url(r'^search/$', 'mainapp.views.search'),
 	url(r'^users_list/$', 'mainapp.views.users_list'),
 	url(r'^search/users_list/$', 'mainapp.views.users_list'),
+	url(r'^edit/$', 'mainapp.views.edit'),
+
 )
