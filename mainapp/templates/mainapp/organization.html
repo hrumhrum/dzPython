@@ -6,6 +6,21 @@
 		<title>Информация об организации</title>
 		<link href=  "{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="{% static "css/org.css" %}">
+		<style>
+            body{
+                font-family: serif;
+                font-style: normal;
+                font-variant: small-caps;
+                font-weight: lighter;
+                line-height: 100%;
+                word-spacing: normal;
+                letter-spacing: normal;
+                text-align: left;
+                vertical-align: center;
+                color: black;
+                font-size: 16px;
+            }
+        </style>
 	</head>
 	
 	<body class="body">
@@ -25,7 +40,7 @@
 	        <!-- Collect the nav links, forms, and other content for toggling -->
 	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
 	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="http://localhost:8000">Home</a></li>
+	            <li class="active"><a href="http://localhost:8000">Главная</a></li>
 	            {% if user.is_authenticated %}
 	            <li><a href="">{{ user.username }}</a></li>
 	            <li><a href="#">{{ userprofile.privilegies }}</a></li>
@@ -50,6 +65,9 @@
 	        </div><!-- /.navbar-collapse -->        
 	      </div><!-- /.container-fluid -->
       </nav>
+      	<div id = "title">
+      			{{desc.name}}
+      	</div>
 									<div id="description">
 										{{desc.description}}
 									</div>

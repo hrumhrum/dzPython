@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 from django.shortcuts import render
 from mainapp.models import News, Organization, UserProfile
@@ -46,7 +47,7 @@ def users_list(request):
 		userprofile = UserProfile.objects.get(user_id=user.id)
 	except UserProfile.DoesNotExist:
 		userprofile = None
-	users = UserProfile.objects.all()
+	users = UserProfile.objects.filter(privilegies__contains='Менеджер')
 	org = Organization.objects.all()
 	return render(request, 'mainapp/users_list.html', {'users' : users, 'org' : org})
 
