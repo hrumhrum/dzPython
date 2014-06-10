@@ -9,46 +9,77 @@
 	</head>
 	
 	<body class="body">
-		<div class="container-fluid">
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			    <div class="navbar-inner">
-			        <div class="container_brand">
-						<p class="brand">{{desc.name}}
-			        </div>
-			    </div>
-			</div>
+		<nav class="navbar navbar-inverse" role="navigation">
+	      <div class="container-fluid">
+	        <!-- Brand and toggle get grouped for better mobile display -->
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#">Веб-сайт для организаций</a>
+	        </div>
 
-			<div id="description">
-				{{desc.description}}
-			</div>
+	        <!-- Collect the nav links, forms, and other content for toggling -->
+	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="http://localhost:8000">Home</a></li>
+	            {% if user.is_authenticated %}
+	            <li><a href="">{{ user.username }}</a></li>
+	            <li><a href="#">{{ userprofile.privilegies }}</a></li>
+	            <li><a href="#">{{ userprofile.organization_id.name }}</a></li>
+	            </ul>
+	            <ul class="nav navbar-nav pull-right">
+	            <li><a href="/logout/">Logout</a></li>
+	            </ul>            
+	            {% else %}
+	          </ul>
+	          <form class="navbar-form navbar-right" role="search" action='/login/' method='post'>{% csrf_token %}
+	                    <div class="form-group">
+	                        <input type="text" class="form-control" name="username" placeholder="Username">
+	                    </div>
+	                    <div class="form-group">
+	                        <input type="password" class="form-control" name="password" placeholder="Password">
+	                    </div>
+	                    <button type="submit" class="btn btn-default">Sign In</button>
+	                </form>
+	            {% endif %}
+	        </div><!-- /.navbar-collapse -->        
+	      </div><!-- /.container-fluid -->
+      </nav>
+									<div id="description">
+										{{desc.description}}
+									</div>
 
-			<div id="contacts">
-				{{desc.addres}}, тел. {{desc.phone}}
-			
-			</div> 
+									<div id="contacts">
+										{{desc.addres}}, тел. {{desc.phone}}
+									
+									</div> 
 
-			<div class="container">
-				<table class="table">{% for new in news %}
-					<thead>
-						<tr>
-							<td>Новости компании</td>
-						</tr>
-					</thead>
+									<div class="container">
+										<table class="table">
+											<thead>
+												<tr>
+													<td>Новости компании</td>
+												</tr>
+											</thead>
 
-					<tbody>
-						<tr>
-							<td>{{new.title}}</td>
-						</tr>
+											<tbody> {% for new in news %}
+												<tr>
+													<td>{{new.title}}</td>
+												</tr>
 
-					    <tr>
-					    	<td>{{new.description}}</td>
-					    </tr>
-					<tbody>
-					
-					{% endfor %}
-				</table>
-			</div>
-		</div>	
+											    <tr>
+											    	<td>{{new.description}}</td>
+											    </tr>
+											<tbody>
+											
+											{% endfor %}
+										</table>
+									</div>
+		
 			
 
 			<script src="{% static "js/jquery-latest.js" %}"></script>
