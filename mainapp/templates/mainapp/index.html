@@ -45,7 +45,7 @@
             {% if user.is_authenticated %}
             <li><a href="">{{ user.username }}</a></li>
             <li><a href="#">{{ userprofile.privilegies }}</a></li>
-            <li><a href="#">{{ userprofile.organization_id.name }}</a></li>
+            <li><a href="#">{% if userprofile.privilegies != 'admin' %}{{ userprofile.organization_id.name }}{% endif %}</a></li>
             {% if user.username = "superuser" %}
             <li><a href='users_list'>Список менеджеров</a></li>
             {% endif %}

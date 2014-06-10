@@ -22,6 +22,7 @@
 
             }
         </style>
+		<script src="{% static "js/jquery-latest.js" %}"></script>
 	</head>
 	
 	<body class="body">
@@ -45,7 +46,7 @@
 	            {% if user.is_authenticated %}
 	            <li><a href="">{{ user.username }}</a></li>
 	            <li><a href="#">{{ userprofile.privilegies }}</a></li>
-	            <li><a href="#">{{ userprofile.organization_id.name }}</a></li>
+            	<li><a href="#">{% if userprofile.privilegies != 'admin' %}{{ userprofile.organization_id.name }}{% endif %}</a></li>
 	           	{% if userprofile.privilegies == 'admin' %}<li><a href="http://localhost:8000/edit/?id={{ desc.id }}">Редактировать организацию</a></li> {% endif %}
 	            </ul>
 	            <ul class="nav navbar-nav pull-right">
@@ -66,10 +67,11 @@
 	        </div><!-- /.navbar-collapse -->        
 	      </div><!-- /.container-fluid -->
       </nav>
+
       <div class="container">
       <div class="row">
       <div class="offset4 span4" style="background:silver">
-      	        <form class="navbar-form center form" role="search" action='/search/' method='post' style=" padding: 15px 15px 15px 15px;">{% csrf_token %}
+      	        <form class="navbar-form center form" role="search" action='/edit/' method='post' style=" padding: 15px 15px 15px 15px;">{% csrf_token %}
                     <div class="form-group" style="width: 100% ">
                     	<label>Название</label>
 						<input type="text" class="form-control" name="name" style="width: 100%; margin-bottom: 50px" value="{{ organizations.name }}">                            
@@ -84,20 +86,25 @@
                     </div>
 					<div class="form-group" style="width: 100%">
 						<label>Описание</label>
-                        <input type="text" class="form-control" name="description" style="width: 100%; margin-bottom: 50px" value="{{ organizations.description }}">                      
+                        <input type="text" class="form-control" name="description" style="width: 100%; margin-bottom: 50px" value="{{ organizations.description }}">                
                     </div>
-					<div class="form-group" style="width: 100%" align="center">
-						<button type="submit" class="btn btn-default" >Сохранить</button>                           
-                    </div>                        
+					<div class="form-group" style="width: 100%">
+                    	<input type="text" class="form-control" name="orgid" value="{{organizations.id}}" style="display:none">
+                    </div>                    
+					<div class="form-group" style="width: 100%">
+	                    <button type="submit" id = 'submitbtn' class="btn btn-default">Сохранить</button>                           
+                    </div>
+                    {% if flag %}
+                    	<script type="text/javascript">
+                    		$('#submitbtn').addClass('btn-success').text('Сохранено!');
+                    		setTimeout(function(){ 
+                    			$('#submitbtn').removeClass('btn-success').text('Coхранить');
+                    		}, 2000);
+                    	</script>
+                    {% endif %} 
                 </form>
         </div>
         </div>
-        </div>
-			<script src="{% static "js/jquery-latest.js" %}"></script>
-	        <script src="{% static "js/bootstrap.min.js" %}"></script>
-	    
+        </div>	    
 	</body>
-
-
-
 </html>

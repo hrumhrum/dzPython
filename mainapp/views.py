@@ -66,7 +66,19 @@ def edit(request):
 		else:
 			if request.GET.get('id'):
 				getid = request.GET.get('id')
-				organizations = Organization.objects.get(id = getid)
-				return render(request, 'mainapp/editorganization.html', {'organizations': organizations})
-			else:
-				getid = 1
+				organization = Organization.objects.get(id = getid)
+				return render(request, 'mainapp/editorganization.html', {'organizations': organization})
+			if request.POST:
+				getid = request.POST["orgid"]
+				name = request.POST['name']
+				addres = request.POST['addres']
+				phone = request.POST['phone']
+				description = request.POST['description']
+				organization = Organization.objects.get(id = getid)
+				organization.name = name
+				organization.addres = addres
+				organization.phone = phone
+				organization.description = description
+				organization.save()
+				flag = True
+				return render(request, 'mainapp/editorganization.html', {'organizations': organization, 'flag': True})
