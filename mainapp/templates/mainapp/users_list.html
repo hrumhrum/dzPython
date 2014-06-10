@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html>
-    
-    </style>
     <head>
-        <title>Главная</title>
+        <title>Список пользователей</title>
     <!-- Bootstrap -->
         <link href=  "{% static "css/bootstrap.min.css" %}" rel="stylesheet">
         <style>
             body{
-                background-image: url(../static/jpeg/url.png);
+                background-image: url(../../../../static/jpeg/url.png);
                 font-family: serif;
                 font-style: normal;
                 font-variant: small-caps;
@@ -46,9 +44,6 @@
             <li><a href="">{{ user.username }}</a></li>
             <li><a href="#">{{ userprofile.privilegies }}</a></li>
             <li><a href="#">{{ userprofile.organization_id.name }}</a></li>
-            {% if user.username = "superuser" %}
-            <li><a href='users_list'>Список менеджеров</a></li>
-            {% endif %}
             </ul>
             <ul class="nav navbar-nav pull-right">
             <li><a href="/logout/">Logout</a></li>
@@ -72,37 +67,37 @@
             <header>
                 <table class="table">
                     <tr>
-                        <td align="left"><h2>Список организаций
+                        <td align="left"><h2>Список менеджеров
                         </h2>
                         <br>
                     </td>
-                        <td align="right"><h2>{{poll|length}}</h2> организаций всего</td>
+                        <td align="right"><h2>{{users|length}}</h2> менеджеров всего</td>
                     </tr>
                 </table>
-                <form class="navbar-form navbar-right" role="search" action='/search/' method='post'>{% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="search" placeholder="Поиск.." style="width: 300px">                            
-                    </div>
-                        <button type="submit" class="btn btn-default">Найти</button>
-                </form>
-                <br>
+                
             </header>           
                 <div class="container">
                     <table class="table table-striped">
                         <tbody>
                             <tr>
+                                <td><strong>Имя</strong></td>
+                                <td><strong>Фамилия</strong></td>
                                 <td><strong>Организация</strong></td>
-                                <td><strong>Адрес</strong></td>
-                                <td><strong>Телефон</strong></td>
-                                <td><strong>Описание</strong></td>
+                                <td><strong>Права доступа</strong></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                             {% for qst in poll %}
+                             {% for qst in users %}
                             <tr>
-                                <td><a class="brand" href="organization/?id={{qst.id}}">{{qst.name}}</a></td>
-                                <td>{{qst.addres}}<a></td>
-                                <td>{{qst.phone}}</td>
-                                <td>                                
-                                    {{qst.description}}                    
+                                <td>{{qst.user.first_name}}</td>
+                                <td>{{qst.user.last_name}}</td>
+                                <td>{{qst.organization_id.name}}</td>
+                                <td>{{qst.privilegies}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-default" id="edit">Изменить</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-default" id="delete">Удалить</button>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -112,5 +107,13 @@
         </div>
         <script src="{{ STATIC_URL }}js/jquery-latest.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+
+        <script type="text/javascript">
+            $(#delete).click(function(e){
+                $(this).remove();
+            }
+            )
+        </script>
     </body>
 </html>

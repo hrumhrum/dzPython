@@ -41,7 +41,14 @@ def search(request):
 	return render(request, 'mainapp/index.html', {'poll': organizations, 'userprofile': userprofile})
 
 def users_list(request):
-	return render(request, 'mainapp/users_list')
+	user = request.user
+	try:
+		userprofile = UserProfile.objects.get(user_id=user.id)
+	except UserProfile.DoesNotExist:
+		userprofile = None
+	users = UserProfile.objects.all()
+	org = Organization.objects.all()
+	return render(request, 'mainapp/users_list.html', {'users' : users, 'org' : org})
 
 
     

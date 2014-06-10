@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^search/organization/$', 'mainapp.views.organization'),
 	url(r'^search/$', 'mainapp.views.search'),
 	url(r'^users_list/$', 'mainapp.views.users_list'),
+	url(r'^search/users_list/$', 'mainapp.views.users_list'),
 )
