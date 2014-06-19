@@ -82,3 +82,41 @@ def edit(request):
 				organization.save()
 				flag = True
 				return render(request, 'mainapp/editorganization.html', {'organizations': organization, 'flag': True})
+
+def edituser(request):
+	user = request.user
+	try:
+		userprofile = UserProfile.objects.get(user_id=user.id)
+	except UserProfile.DoesNotExist:
+		userprofile = None
+
+	if userprofile == None:
+		return render(request, 'mainapp/403.html')
+	else:		
+		if userprofile.privilegies != 'admin':
+			return render(request, 'mainapp/403.html')
+		else:
+			if request.GET.get('id'):
+				getid = request.GET.get('id')
+				userprofile = UserProfile.objects.get(id=getid)
+				return render(request, 'mainapp/edituser.html', {'users' : userprofile})
+			if request.POST:
+				getid = request.POST['user_id']
+				first_name = request.POST['first_name']
+				last_name = request.POST['last_name']
+				org = request.POST['organization_id']
+				post = request.POST['privilegies']
+				userprofile = UserProfile.objects.get(id = getid)
+				user = User.objects.get(id = userprofile.user_id)
+				organization = Organization.objects.get(id = userprofile.organization_id_id)
+				user.first_name = first_name
+				user.last_name = last_name
+				user.save()
+				organization.name = org
+				organization.save()
+				userprofile.privilegies = post
+				userprofile.save()
+				flag = True
+				return render(request, 'mainapp/edituser.html', {'users' : userprofile, 'flag': True})
+
+
