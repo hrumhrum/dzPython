@@ -5,15 +5,16 @@ from mainapp.models import News, Organization, UserProfile
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from mainapp.gateway import *
+from mainapp.domainmodel import *
+from mainapp.adapter import *
+
 
 def index(request):
 	user = request.user
-	try:
-		userprofile = UserProfile.objects.get(user_id=user.id)
-	except UserProfile.DoesNotExist:
-		userprofile = None
-
-	organizations = Organization.objects.all()
+	userprofile = UserprofileDmodel({}).getUser(user.id) #domainmodel
+	organizationGateway = OrganizationGateway({}) #gateway
+	organizations = organizationGateway.getAll()
 	return render(request, 'mainapp/index.html', {'poll': organizations, 'userprofile': userprofile})
 
 def organization(request):
@@ -22,41 +23,38 @@ def organization(request):
 		getid = request.GET.get('id')
 	else:
 		getid = 1
-	try:
-		userprofile = UserProfile.objects.get(user_id=user.id)
-	except UserProfile.DoesNotExist:
-		userprofile = None
-	organizations = Organization.objects.get(id = getid)
-	news = News.objects.filter(organization_id = getid)
+	userprofileGateway = UserprofileGateway()
+	userprofile = UserprofileDmodel({}).getUser(user.id)
+
+	organizationGateway = OrganizationGateway({})
+	organizations = organizationGateway.get(getid)
+
+	news = News.objects.filter(organization_id = getid) #!!
 	return render(request, 'mainapp/organization.html', {'desc': organizations, 'userprofile': userprofile, 'news' : news})
 
 def search(request):
 	query = request.POST["search"]
 	user = request.user
-	try:
-		userprofile = UserProfile.objects.get(user_id=user.id)
-	except UserProfile.DoesNotExist:
-		userprofile = None
+	userprofileGateway = UserprofileGateway()
+	userprofile = UserprofileDmodel({}).getUser(user.id)
 
-	organizations = Organization.objects.filter(name__contains=query)
+	organizations = Organization.objects.filter(name__contains=query) #!!
 	return render(request, 'mainapp/index.html', {'poll': organizations, 'userprofile': userprofile})
 
 def users_list(request):
 	user = request.user
-	try:
-		userprofile = UserProfile.objects.get(user_id=user.id)
-	except UserProfile.DoesNotExist:
-		userprofile = None
-	users = UserProfile.objects.filter(privilegies__contains='Менеджер')
-	org = Organization.objects.all()
+	userprofileGateway = UserprofileGateway()
+	organizationGateway = OrganizationGateway({})
+	userprofile = UserprofileDmodel({}).getUser(user.id)
+
+	users = UserProfile.objects.filter(privilegies__contains='manager')
+	org = organizationGateway.getAll()
 	return render(request, 'mainapp/users_list.html', {'users' : users, 'org' : org})
 
 def edit(request):
 	user = request.user
-	try:
-		userprofile = UserProfile.objects.get(user_id=user.id)
-	except UserProfile.DoesNotExist:
-		userprofile = None
+	userprofileGateway = UserprofileGateway()
+	userprofile = UserprofileDmodel({}).getUser(user.id)
 
 	if userprofile == None:
 		return render(request, 'mainapp/403.html')
@@ -69,27 +67,16 @@ def edit(request):
 				organization = Organization.objects.get(id = getid)
 				return render(request, 'mainapp/editorganization.html', {'organizations': organization})
 			if request.POST:
-				getid = request.POST["orgid"]
-				name = request.POST['name']
-				addres = request.POST['addres']
-				phone = request.POST['phone']
-				description = request.POST['description']
-				organization = Organization.objects.get(id = getid)
-				organization.name = name
-				organization.addres = addres
-				organization.phone = phone
-				organization.description = description
-				organization.save()
+				editAdapter = AdapterEditOrganization()
+				editOrganization = Edit(editAdapter)
+				organization = editOrganization.edit(request)
 				flag = True
 				return render(request, 'mainapp/editorganization.html', {'organizations': organization, 'flag': True})
 
 def edituser(request):
 	user = request.user
-	try:
-		userprofile = UserProfile.objects.get(user_id=user.id)
-	except UserProfile.DoesNotExist:
-		userprofile = None
-
+	userprofile = UserprofileDmodel({}).getUser(user.id)
+	userprofileGateway = UserprofileGateway()
 	if userprofile == None:
 		return render(request, 'mainapp/403.html')
 	else:		
@@ -98,24 +85,13 @@ def edituser(request):
 		else:
 			if request.GET.get('id'):
 				getid = request.GET.get('id')
-				userprofile = UserProfile.objects.get(id=getid)
+				userprofile = userprofileGateway.get(getid)
 				return render(request, 'mainapp/edituser.html', {'users' : userprofile})
 			if request.POST:
-				getid = request.POST['user_id']
-				first_name = request.POST['first_name']
-				last_name = request.POST['last_name']
-				org = request.POST['organization_id']
-				post = request.POST['privilegies']
-				userprofile = UserProfile.objects.get(id = getid)
-				user = User.objects.get(id = userprofile.user_id)
-				organization = Organization.objects.get(id = userprofile.organization_id_id)
-				user.first_name = first_name
-				user.last_name = last_name
-				user.save()
-				organization.name = org
-				organization.save()
-				userprofile.privilegies = post
-				userprofile.save()
+				editAdapter = AdapterEditProfile()
+				editUser = Edit(editAdapter)
+				userprofile = editUser.edit(request)
+
 				flag = True
 				return render(request, 'mainapp/edituser.html', {'users' : userprofile, 'flag': True})
 
