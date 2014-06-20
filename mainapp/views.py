@@ -46,7 +46,6 @@ def edit(request):
 def edituser(request):
 	user = request.user
 	userprofile = UserprofileDmodel({}).getUser(user.id)
-	userprofileGateway = UserprofileGateway()
 	if userprofile == None:
 		return render(request, 'mainapp/403.html')
 	else:		

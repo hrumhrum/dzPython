@@ -32,7 +32,6 @@ class UserprofileDmodel:
 		return userprofile
 
 class EditLogicDmodel:
-
 	def doEditLogic(self, request):
 		user = request.user
 		userprofile = UserprofileDmodel({}).getUser(user.id)
